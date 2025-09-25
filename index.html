@@ -9,7 +9,7 @@
     body { font-family: 'Lato', sans-serif; margin:0; padding:0; }
     .carousel-fade .carousel-inner .item {
       opacity: 0;
-      transition: opacity 0.5s ease-in-out; /* Durasi transisi 0.5 detik */
+      transition: opacity 3s ease-in-out; /* Durasi transisi 3 detik */
     }
     .carousel-fade .carousel-inner .active { opacity: 1; }
     .carousel-fade .carousel-control { z-index: 2; }
@@ -20,12 +20,6 @@
   </style>
 </head>
 <body>
-
-<div style="text-align:center;">
-  <h3 style="margin: 20px 0; border-bottom: 2px solid #666; display:inline-block; padding-bottom:10px">
-    PRESTASI MURID SMA ISLAM AL AZHAR 16 SEMARANG
-  </h3>
-</div>
 
 <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner" role="listbox" id="carousel-slides"></div>
@@ -63,7 +57,6 @@
     container.innerHTML = images.map((src, idx) => `
       <div class="item ${idx === 0 ? 'active' : ''}">
         <img src="${src}" alt="Slide ${idx+1}">
-        <div class="carousel-caption"><h3>Prestasi ${idx+1}</h3></div>
       </div>
     `).join("");
   }
