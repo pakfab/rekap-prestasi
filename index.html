@@ -1,8 +1,20 @@
+<!doctype html>
+<html lang="id">
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRESTASI MURID SMA ISLAM AL AZHAR 16 SEMARANG</title>
+<style>
+  body{ margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:#111; }
+  .slideshow{ width:80vw; max-width:900px; aspect-ratio:16/9; position:relative; overflow:hidden; border-radius:10px; background:#000; }
+  .slideshow img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; }
+  .slideshow img.active{ opacity:1; }
+  .msg{ color:#fff; font-family:sans-serif; text-align:center; padding:2rem; }
+</style>
   <meta charset="UTF-8">
-  <title>PRESTASI MURID SMA ISLAM ALAZHAR 16 SEMARANG</title>
+  <title>Slideshow Foto (/img)</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
   <style>
@@ -10,68 +22,37 @@
     .carousel-fade .carousel-inner .item { opacity: 0; transition-property: opacity; }
     .carousel-fade .carousel-inner .active { opacity: 1; }
     .carousel-fade .carousel-control { z-index: 2; }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* carousel penuh layar */
-    .carousel,
-    .carousel-inner,
-    .carousel-inner .item {
-      height: 100vh;
-    }
-
-    .item img { 
-      width: 100%; 
-      height: 100vh; 
-      object-fit: cover; 
-    }
-
-    .carousel-caption { 
-      text-shadow: 0 1px 4px rgba(0,0,0,.9); 
-      font-size: 17px; 
-    }
+    html, body, .carousel, .carousel-inner, .carousel-inner .item { height: 100%; }
+    .carousel-caption { text-shadow: 0 1px 4px rgba(0,0,0,.9); font-size: 17px; }
     .carousel-caption h3 { font-size: 30px; }
-
-    /* Responsif untuk HP */
-    @media (max-width: 768px) {
-      .carousel-caption {
-        font-size: 14px;
-        padding: 5px;
-        bottom: 20px;
-      }
-      .carousel-caption h3 {
-        font-size: 18px;
-        margin-bottom: 5px;
-      }
-      .item img {
-        height: 100vh; /* tetap penuh layar di HP */
-      }
-      .left.carousel-control,
-      .right.carousel-control {
-        font-size: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .carousel-caption {
-        font-size: 12px;
-        bottom: 15px;
-      }
-      .carousel-caption h3 {
-        font-size: 16px;
-      }
-    }
+    .item img { width: 100%; height: 100%; object-fit: cover; }
   </style>
 </head>
 <body>
 
+<div class="slideshow" id="slideshow">
+  <div class="msg">Belum ada gambar. <br><a href="input.html" style="color:#0af">Tambah URL di sini</a></div>
+<div style="text-align:center;">
+  <h3 style="margin: 20px 0; border-bottom: 2px solid #666; display:inline-block; padding-bottom:10px">
+    Slideshow Foto (/img)
+  </h3>
+  <p><a href="manage.html">Kelola Daftar Gambar</a></p>
+</div>
+
+<script>
+  const container=document.getElementById("slideshow");
+  const urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
 <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner" role="listbox" id="carousel-slides"></div>
 
+  if(urls.length){
+    container.innerHTML="";
+    urls.forEach((src,i)=>{
+      const img=document.createElement("img");
+      img.src=src;
+      if(i===0) img.classList.add("active");
+      container.appendChild(img);
+    });
   <!-- Controls -->
   <a class="left carousel-control" href="#carouselFade" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -81,6 +62,13 @@
   </a>
 </div>
 
+    let idx=0;
+    setInterval(()=>{
+      const imgs=container.querySelectorAll("img");
+      imgs[idx].classList.remove("active");
+      idx=(idx+1)%imgs.length;
+      imgs[idx].classList.add("active");
+    },4000);
 <!-- jQuery + Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -91,7 +79,8 @@
       "foto2.jpg",
       "foto3.png"
     ];
-  }
+}
+</script>
 
   function loadSlides() {
     const images = getImages();
