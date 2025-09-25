@@ -1,18 +1,6 @@
-<!doctype html>
-<html lang="id">
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PRESTASI MURID SMA ISLAM AL AZHAR 16 SEMARANG</title>
-<style>
-  body{ margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:#111; }
-  .slideshow{ width:80vw; max-width:900px; aspect-ratio:16/9; position:relative; overflow:hidden; border-radius:10px; background:#000; }
-  .slideshow img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; }
-  .slideshow img.active{ opacity:1; }
-  .msg{ color:#fff; font-family:sans-serif; text-align:center; padding:2rem; }
-</style>
   <meta charset="UTF-8">
   <title>Slideshow Foto (/img)</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -25,34 +13,21 @@
     html, body, .carousel, .carousel-inner, .carousel-inner .item { height: 100%; }
     .carousel-caption { text-shadow: 0 1px 4px rgba(0,0,0,.9); font-size: 17px; }
     .carousel-caption h3 { font-size: 30px; }
-    .item img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Gambar responsif penuh layar */
+    .item img {
+      width: 100%;
+      height: 100vh;       /* penuh setinggi layar */
+      object-fit: contain; /* tampil utuh, tidak terpotong */
+      background: #000;    /* latar belakang hitam kalau ada ruang kosong */
+    }
   </style>
 </head>
 <body>
 
-<div class="slideshow" id="slideshow">
-  <div class="msg">Belum ada gambar. <br><a href="input.html" style="color:#0af">Tambah URL di sini</a></div>
-<div style="text-align:center;">
-  <h3 style="margin: 20px 0; border-bottom: 2px solid #666; display:inline-block; padding-bottom:10px">
-    Slideshow Foto (/img)
-  </h3>
-  <p><a href="manage.html">Kelola Daftar Gambar</a></p>
-</div>
-
-<script>
-  const container=document.getElementById("slideshow");
-  const urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
 <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner" role="listbox" id="carousel-slides"></div>
 
-  if(urls.length){
-    container.innerHTML="";
-    urls.forEach((src,i)=>{
-      const img=document.createElement("img");
-      img.src=src;
-      if(i===0) img.classList.add("active");
-      container.appendChild(img);
-    });
   <!-- Controls -->
   <a class="left carousel-control" href="#carouselFade" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -62,13 +37,6 @@
   </a>
 </div>
 
-    let idx=0;
-    setInterval(()=>{
-      const imgs=container.querySelectorAll("img");
-      imgs[idx].classList.remove("active");
-      idx=(idx+1)%imgs.length;
-      imgs[idx].classList.add("active");
-    },4000);
 <!-- jQuery + Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -79,14 +47,13 @@
       "foto2.jpg",
       "foto3.png"
     ];
-}
-</script>
+  }
 
   function loadSlides() {
     const images = getImages();
     const container = document.getElementById("carousel-slides");
     if (images.length === 0) {
-      container.innerHTML = `<div class="item active" style="background:#444;color:#fff;text-align:center;">
+      container.innerHTML = `<div class="item active" style="background:#000;color:#fff;text-align:center; height:100vh; display:flex; align-items:center; justify-content:center;">
         <div class="carousel-caption"><h3>Tidak ada gambar</h3><p>Tambahkan lewat <a href='manage.html'>manage.html</a></p></div>
       </div>`;
       return;
