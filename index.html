@@ -122,7 +122,7 @@
   // Fullscreen API
   const elem = document.documentElement; // kabeh halaman
 
-  document.getElementById("goFullscreen".addEventListener("click", () => {
+  document.getElementById("goFullscreen").addEventListener("click", () => {
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) { // safari / webkit
