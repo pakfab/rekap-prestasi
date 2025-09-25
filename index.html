@@ -75,12 +75,11 @@
       return;
     }
     container.innerHTML = images.map((file, idx) => `
-      <div class="item ${idx === 0 ? 'active' : ''}">
-        <img src="img/${file}" alt="Slide ${idx+1}">
-        <div class="carousel-caption"><h3>Slide ${idx+1}</h3><p>${file}</p></div>
-      </div>
-    `).join("");
-  }
+    <div class="item ${idx === 0 ? 'active' : ''}">
+      <img src="img/${file}" alt="Slide ${idx+1}">
+    </div>
+  `).join("");
+}
 
   $(document).ready(function() {
     loadSlides();
