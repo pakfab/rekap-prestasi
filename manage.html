@@ -14,7 +14,7 @@
   <h2>Kelola Daftar Gambar (/img)</h2>
   <form id="imgForm" class="form-inline" style="margin-bottom:20px;">
     <div class="form-group">
-      <input type="text" id="imgName" class="form-control" placeholder="contoh: foto1.jpg" required>
+      <input type="text" id="imgName" class="form-control" placeholder="contoh: 17 atau foto1.jpg" required>
     </div>
     <button type="submit" class="btn btn-primary">Tambah</button>
   </form>
@@ -51,11 +51,18 @@
     saveImages(images);
     renderList();
   }
+
   document.getElementById("imgForm").addEventListener("submit", function(e) {
     e.preventDefault();
     const input = document.getElementById("imgName");
-    const file = input.value.trim();
+    let file = input.value.trim();
+
     if (file) {
+      // cek apakah ada ekstensi
+      if (!file.includes(".")) {
+        file = file + ".jpg"; // default ke .jpg
+      }
+
       const images = getImages();
       images.push(file);
       saveImages(images);
@@ -63,6 +70,7 @@
       renderList();
     }
   });
+
   renderList();
 </script>
 </body>
