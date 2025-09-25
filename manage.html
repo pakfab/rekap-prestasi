@@ -14,7 +14,7 @@
   <h2>Kelola Daftar Gambar (/img)</h2>
   <form id="imgForm" class="form-inline" style="margin-bottom:20px;">
     <div class="form-group">
-      <input type="text" id="imgName" class="form-control" placeholder="contoh: 17 atau foto1.jpg" required>
+      <input type="text" id="imgName" class="form-control" placeholder="contoh: 17 atau foto1" required>
     </div>
     <button type="submit" class="btn btn-primary">Tambah</button>
   </form>
@@ -28,9 +28,11 @@
   function getImages() {
     return JSON.parse(localStorage.getItem("imgFiles")) || [];
   }
+
   function saveImages(images) {
     localStorage.setItem("imgFiles", JSON.stringify(images));
   }
+
   function renderList() {
     const list = document.getElementById("imgList");
     const images = getImages();
@@ -45,6 +47,7 @@
       </li>
     `).join("");
   }
+
   function deleteImg(index) {
     const images = getImages();
     images.splice(index, 1);
@@ -58,9 +61,9 @@
     let file = input.value.trim();
 
     if (file) {
-      // cek apakah ada ekstensi
-      if (!file.includes(".")) {
-        file = file + ".jpg"; // default ke .jpg
+      // kalau user ngetik tanpa ekstensi → otomatis tambahkan .png
+      if (!file.toLowerCase().endsWith(".png")) {
+        file = file + ".png";
       }
 
       const images = getImages();
