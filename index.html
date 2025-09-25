@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRESTASI MURID SMA ISLAM AL AZHAR 16 SEMARANG</title>
+<style>
+  body{ margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:#111; }
+  .slideshow{ width:80vw; max-width:900px; aspect-ratio:16/9; position:relative; overflow:hidden; border-radius:10px; background:#000; }
+  .slideshow img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; }
+  .slideshow img.active{ opacity:1; }
+  .msg{ color:#fff; font-family:sans-serif; text-align:center; padding:2rem; }
+</style>
+</head>
+<body>
+
+<div class="slideshow" id="slideshow">
+  <div class="msg">Belum ada gambar. <br><a href="input.html" style="color:#0af">Tambah URL di sini</a></div>
+</div>
+
+<script>
+  const container=document.getElementById("slideshow");
+  const urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
+
+  if(urls.length){
+    container.innerHTML="";
+    urls.forEach((src,i)=>{
+      const img=document.createElement("img");
+      img.src=src;
+      if(i===0) img.classList.add("active");
+      container.appendChild(img);
+    });
+
+    let idx=0;
+    setInterval(()=>{
+      const imgs=container.querySelectorAll("img");
+      imgs[idx].classList.remove("active");
+      idx=(idx+1)%imgs.length;
+      imgs[idx].classList.add("active");
+    },4000);
+  }
+</script>
+
+</body>
+</html>
