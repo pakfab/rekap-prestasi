@@ -9,7 +9,7 @@
     body { font-family: 'Lato', sans-serif; margin:0; padding:0; }
     .carousel-fade .carousel-inner .item {
       opacity: 0;
-      transition: opacity 3s ease-in-out; /* Durasi transisi 3 detik */
+      transition: opacity 0,5s ease-in-out; /* Durasi transisi 3 detik */
     }
     .carousel-fade .carousel-inner .active { opacity: 1; }
     .carousel-fade .carousel-control { z-index: 2; }
@@ -21,7 +21,7 @@
 </head>
 <body>
 
-<div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
+<div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">
   <div class="carousel-inner" role="listbox" id="carousel-slides"></div>
 
   <!-- Controls -->
