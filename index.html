@@ -56,6 +56,7 @@
       width: auto;        /* lebar ikut proporsi */
       margin: auto;
       display: block;
+      background: transparent; /* biar PNG transparan tetap transparan */
     }
   </style>
 </head>
@@ -77,12 +78,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script>
+  // Ambil semua gambar dari localStorage
   function getAllImages() {
+    // imgFiles berisi array nama file (misalnya: ["prestasi1.png","prestasi2.png"])
     const localImages = (JSON.parse(localStorage.getItem("imgFiles")) || []).map(file => `img/${file}`);
+    // driveImages jika ada tambahan link dari luar
     const driveImages = JSON.parse(localStorage.getItem("driveImages")) || [];
     return [...localImages, ...driveImages];
   }
 
+  // Generate carousel slides
   function loadSlides() {
     const images = getAllImages();
     const container = document.getElementById("carousel-slides");
