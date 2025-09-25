@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Upload Link Google Drive</title>
+<style>
+  body{ font-family:sans-serif; padding:2rem; background:#f9f9f9; }
+  h2{ text-align:center; }
+  form{ max-width:600px; margin:auto; display:flex; gap:0.5rem; }
+  input{ flex:1; padding:0.6rem; font-size:1rem; border:1px solid #ccc; border-radius:6px; }
+  button{ padding:0.6rem 1rem; font-size:1rem; border:none; border-radius:6px; background:#0066cc; color:#fff; cursor:pointer; }
+  button:hover{ background:#004999; }
+  ul{ max-width:600px; margin:1rem auto; padding:0; list-style:none; }
+  li{ background:#fff; margin:0.4rem 0; padding:0.6rem; border:1px solid #ddd; border-radius:6px; display:flex; justify-content:space-between; align-items:center; }
+  a{ color:#0066cc; word-break:break-all; }
+  .remove{ background:red; color:#fff; border:none; border-radius:4px; padding:0.3rem 0.6rem; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h2>Tambah Link Google Drive</h2>
+<p style="text-align:center">Masukkan link Google Drive (format <code>/file/d/FILE_ID/view</code>), sistem akan otomatis ubah jadi direct link.</p>
+
+<form id="form">
+  <input type="url" id="url" placeholder="https://drive.google.com/file/d/FILE_ID/view" required>
+  <button type="submit">Tambah</button>
+</form>
+
+<ul id="list"></ul>
+
+<p style="text-align:center"><a href="index.html">👉 Lihat Slideshow</a></p>
+
+<script>
+  const form=document.getElementById("form");
+  const input=document.getElementById("url");
+  const list=document.getElementById("list");
+
+  function loadLinks(){
+    list.innerHTML="";
+    let urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
+    urls.forEach((u,i)=>{
+      const li=document.createElement("li");
+      li.innerHTML=`<a href="${u}" target="_blank">${u}</a>
+                    <button class="remove" onclick="removeLink(${i})">X</button>`;
+      list.appendChild(li);
+    });
+  }
+
+  function convertLink(link){
+    let match=link.match(/\/file\/d\/([^/]+)\//);
+    if(match){
+      return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    }
+    return link; // kalau sudah direct link, biarkan
+  }
+
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    let urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
+    urls.push(convertLink(input.value.trim()));
+    localStorage.setItem("driveImages",JSON.stringify(urls));
+    input.value="";
+    loadLinks();
+  });
+
+  function removeLink(i){
+    let urls=JSON.parse(localStorage.getItem("driveImages")||"[]");
+    urls.splice(i,1);
+    localStorage.setItem("driveImages",JSON.stringify(urls));
+    loadLinks();
+  }
+
+  loadLinks();
+</script>
+
+</body>
+</html>
